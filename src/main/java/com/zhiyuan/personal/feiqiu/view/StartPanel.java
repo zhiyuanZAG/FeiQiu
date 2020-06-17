@@ -23,10 +23,10 @@ import java.awt.*;
 public class StartPanel {
 
     //个人信息面板
-    private JNamePanel namePanel;
+    private JPanel namePanel;
 
     //好友列表面板
-    private JFriendPanel friendPanel;
+    private JPanel friendPanel;
 
     //下方工具栏面板
     private JToolPanel toolPanel;
@@ -44,7 +44,7 @@ public class StartPanel {
     public void createStartPanel (){
         JFrame frame = new JFrame("feiQiu");
         frame.setBounds(1300, 15, 300, 750);
-        frame.setLayout(new BorderLayout());
+        frame.setLayout(new BorderLayout(5, 4));
         frame.add(namePanel, BorderLayout.NORTH);
         frame.add(friendPanel, BorderLayout.CENTER);
         frame.add(toolPanel, BorderLayout.SOUTH);
@@ -55,8 +55,8 @@ public class StartPanel {
 
     public static void main(String[] args) {
         StartPanel panel = new StartPanel();
-        panel.namePanel = new JNamePanel();
-        panel.friendPanel = new JFriendPanel();
+        panel.namePanel = JNamePanelFactory.createNamePanel();
+        panel.friendPanel = JFriendPanelFactory.createFriendPanel();
         panel.toolPanel = new JToolPanel();
         panel.createStartPanel();
     }
