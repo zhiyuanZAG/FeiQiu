@@ -1,4 +1,4 @@
-package com.zhiyuan.personal.feiqiu.view.factory;
+package com.zhiyuan.personal.feiqiu.dto.factory;
 
 import com.zhiyuan.personal.feiqiu.dto.ClientUser;
 

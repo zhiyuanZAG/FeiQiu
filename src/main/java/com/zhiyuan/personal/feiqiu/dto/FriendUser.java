@@ -2,6 +2,8 @@ package com.zhiyuan.personal.feiqiu.dto;
 
 import lombok.*;
 
+import javax.swing.*;
+
 /**
  * 〈一句话功能简述〉<br>
  * 〈〉
@@ -12,12 +14,15 @@ import lombok.*;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class FriendUser extends ClientUser {
 
     //分组名
     private String groupName;
 
+    @Builder(toBuilder = true)
+    public FriendUser(String hostIP, String name, ImageIcon icon, String groupName) {
+        super(hostIP, name, icon);
+        this.groupName = groupName;
+    }
 }

@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.swing.*;
+
 /**
  * 〈一句话功能简述〉<br>
  * 〈客户端用户实体类〉
@@ -19,10 +21,13 @@ import lombok.NoArgsConstructor;
 public class ClientUser {
 
     //IP地址
-    private String hostIP;
+    String hostIP;
 
     //用户名
-    private String name;
+    String name;
+
+    //用户头像
+    ImageIcon icon;
 
 
 }

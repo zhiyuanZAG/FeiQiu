@@ -1,9 +1,11 @@
 package com.zhiyuan.personal.feiqiu.renderer;
 
 import com.zhiyuan.personal.feiqiu.dto.FriendUser;
+import org.springframework.util.ResourceUtils;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.FileNotFoundException;
 
 /**
  * 〈一句话功能简述〉<br>
@@ -13,18 +15,35 @@ import java.awt.*;
  * @create 2020/6/17 16:26
  * @since 1.0.0
  */
-public class FriendListCellRenderer  extends JLabel implements ListCellRenderer{
+public class FriendListCellRenderer extends JLabel implements ListCellRenderer {
 
     @Override
     public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-        FriendUser user = (FriendUser)value;
+        FriendUser user = (FriendUser) value;
 
         /**
          * 设置jLable的文字
          *      用户IP
          *      用户名
          */
-        String text = "<html>" + user.getHostIP() + "<br/>" + user.getName() + "<html/>";
+        String text = "<html> hostIP: " + user.getHostIP() + "<br/> hostName: " + user.getName() + "<html/>";
+
+        //显示用户头像
+        ImageIcon icon;
+
+        try {
+            if (null == user.getIcon()) {
+                icon = new ImageIcon(new ImageIcon(ResourceUtils.getURL("classpath:icon/crown.png")).getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
+            } else {
+                icon = new ImageIcon(user.getIcon().getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
+            }
+            setIcon(icon);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        //设置头像与用户名的间隔.
+        setIconTextGap(25);
+
         setText(text);
         return this;
     }

@@ -1,7 +1,7 @@
-package com.zhiyuan.personal.feiqiu.view;
+package com.zhiyuan.personal.feiqiu.view.factory;
 
 import com.zhiyuan.personal.feiqiu.dto.ClientUser;
-import com.zhiyuan.personal.feiqiu.view.factory.LocalClientUserFacotry;
+import com.zhiyuan.personal.feiqiu.dto.factory.LocalClientUserFacotry;
 import lombok.*;
 
 import javax.swing.*;

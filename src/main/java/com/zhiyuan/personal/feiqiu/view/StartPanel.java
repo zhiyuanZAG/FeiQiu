@@ -22,6 +22,19 @@ import java.awt.*;
 @NoArgsConstructor
 public class StartPanel {
 
+    //x轴绝对位置
+    private static Integer POSITION_X = 1300;
+    //y轴绝对位置
+    private static Integer POSITION_Y = 15;
+    //面板宽度
+    private static Integer WIDTH = 300;
+    //面板高度
+    private static Integer HEIGHT = 760;
+    //V方向组件间间隔(像素)
+    private static Integer VGAP = 2;
+    //H方向组件间间隔(像素)
+    private static Integer HGAP = 3;
+
     //个人信息面板
     private JPanel namePanel;
 
@@ -34,30 +47,22 @@ public class StartPanel {
 
     /**
      * 功能描述: <br>
-     * 〈创建〉
+     * 〈展示开始面板〉
      *
      * @author zhiyuan.zhang01
      * @param: []
      * @return void
      * @created 2020/6/16 19:14
      */
-    public void createStartPanel (){
+    public void showStartPanel(){
         JFrame frame = new JFrame("feiQiu");
-        frame.setBounds(1300, 15, 300, 750);
-        frame.setLayout(new BorderLayout(5, 4));
+        frame.setBounds(POSITION_X, POSITION_Y, WIDTH, HEIGHT);
+        frame.setLayout(new BorderLayout(HGAP, VGAP));
         frame.add(namePanel, BorderLayout.NORTH);
         frame.add(friendPanel, BorderLayout.CENTER);
         frame.add(toolPanel, BorderLayout.SOUTH);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
     }
 
-    public static void main(String[] args) {
-        StartPanel panel = new StartPanel();
-        panel.namePanel = JNamePanelFactory.createNamePanel();
-        panel.friendPanel = JFriendPanelFactory.createFriendPanel();
-        panel.toolPanel = new JToolPanel();
-        panel.createStartPanel();
-    }
 }

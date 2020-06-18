@@ -1,14 +1,11 @@
-package com.zhiyuan.personal.feiqiu.view;
+package com.zhiyuan.personal.feiqiu.view.factory;
 
-import com.zhiyuan.personal.feiqiu.dto.FriendUser;
-import com.zhiyuan.personal.feiqiu.model.FriendListModel;
 import com.zhiyuan.personal.feiqiu.renderer.FriendListCellRenderer;
-import com.zhiyuan.personal.feiqiu.view.factory.FriendDefaultListModelFactory;
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.List;
 
 /**
  * 〈一句话功能简述〉<br>
@@ -22,10 +19,10 @@ import java.util.List;
 @Builder
 public class JFriendPanelFactory{
 
-    private static Font FONT = new Font("楷体", Font.BOLD, 18);
+    private static Font FONT = new Font("楷体", Font.BOLD, 20);
 
     //宽度
-    private static Integer WEIGHT = 290;
+    private static Integer WEIGHT = 280;
 
     //高度
     private static Integer HEIGHT = 670;
@@ -37,7 +34,7 @@ public class JFriendPanelFactory{
      *
      * @author zhiyuan.zhang01
      * @param: []
-     * @return com.zhiyuan.personal.feiqiu.view.JFriendPanelFactory
+     * @return com.zhiyuan.personal.feiqiu.view.factory.JFriendPanelFactory
      * @created 2020/6/17 17:18
      */
     public static JPanel createFriendPanel() {
@@ -47,6 +44,7 @@ public class JFriendPanelFactory{
         //好友列表
         DefaultListModel model = FriendDefaultListModelFactory.getListModelInstance();
         JList friendList =  new JList(model);
+        //应用自定义单元渲染器
         friendList.setCellRenderer(new FriendListCellRenderer());
         friendList.setFont(FONT);
         friendList.setPreferredSize(new Dimension(WEIGHT, HEIGHT));
@@ -54,7 +52,7 @@ public class JFriendPanelFactory{
         JScrollPane jsp = new JScrollPane(friendList);
         jsp.setPreferredSize(new Dimension(WEIGHT, HEIGHT));
 
-        //添加滚动pane
+        //滚动pane 添加到jpanel上
         jp.add(jsp);
         return jp;
     }
