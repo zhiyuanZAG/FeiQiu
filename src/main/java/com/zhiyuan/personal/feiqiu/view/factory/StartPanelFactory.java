@@ -53,6 +53,7 @@ public class StartPanelFactory {
                 .namePanel(JNamePanelFactory.createNamePanel())
                 .friendPanel(JFriendPanelFactory.createFriendPanel())
                 .toolPanel(new JToolPanel())
+                .isOpen(false)
                 .build();
     }
 

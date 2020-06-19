@@ -1,6 +1,7 @@
 package com.zhiyuan.personal.feiqiu.dto.factory;
 
 import com.zhiyuan.personal.feiqiu.dto.ClientUser;
+import org.springframework.stereotype.Component;
 
 /**
  * 〈一句话功能简述〉<br>

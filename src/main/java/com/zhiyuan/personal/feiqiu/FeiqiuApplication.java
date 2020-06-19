@@ -1,29 +1,34 @@
 package com.zhiyuan.personal.feiqiu;
 
 import com.zhiyuan.personal.feiqiu.dto.FriendUser;
+import com.zhiyuan.personal.feiqiu.service.StartPanelService;
+import com.zhiyuan.personal.feiqiu.service.impl.StartPanelServiceImpl;
 import com.zhiyuan.personal.feiqiu.view.factory.FriendDefaultListModelFactory;
 import com.zhiyuan.personal.feiqiu.view.factory.StartPanelFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.context.annotation.ComponentScan;
 
 import javax.swing.*;
 
+@ComponentScan(basePackages = {"com.zhiyuan.personal.feiqiu"})
 @SpringBootApplication(exclude= {DataSourceAutoConfiguration.class})
 public class FeiqiuApplication {
 
 	public static void main(String[] args) {
+		//启动线程: 创建并显示GUI
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				StartPanelService startPanelService = new StartPanelServiceImpl();
+				startPanelService.createAndShowGUI();
+			}
+		});
 
-		//0. 初始化当前用户
-
-		//1. 广播本机上线
-
-		//2. 接收所有在线用户
-
-		//3. 展开启动页面
-		StartPanelFactory.getStartPanelInstance().showStartPanel();
-
-		//4 更新好友列表
-
+		//启动应用
+		SpringApplication.run(FeiqiuApplication.class, args);
 		System.out.println("====server Started====");
 
 		// TODO: 2020/6/18 测试动态添加对象
@@ -36,7 +41,6 @@ public class FeiqiuApplication {
 			e.printStackTrace();
 		}
 
-//		SpringApplication.run(FeiqiuApplication.class, args);
 	}
 
 }

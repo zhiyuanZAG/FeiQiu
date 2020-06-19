@@ -44,6 +44,9 @@ public class StartPanel {
     //下方工具栏面板
     private JToolPanel toolPanel;
 
+    //面板是否已打开标志位(限制只打开一个面板)
+    private volatile boolean isOpen;
+
 
     /**
      * 功能描述: <br>
@@ -55,6 +58,10 @@ public class StartPanel {
      * @created 2020/6/16 19:14
      */
     public void showStartPanel(){
+        if (isOpen) {
+            System.out.println("限制只能打开一个主面板");
+            return;
+        }
         JFrame frame = new JFrame("feiQiu");
         frame.setBounds(POSITION_X, POSITION_Y, WIDTH, HEIGHT);
         frame.setLayout(new BorderLayout(HGAP, VGAP));
@@ -63,6 +70,7 @@ public class StartPanel {
         frame.add(toolPanel, BorderLayout.SOUTH);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        isOpen = true;
     }
 
 }
