@@ -13,7 +13,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 import javax.swing.*;
 
-@ComponentScan(basePackages = {"com.zhiyuan.personal.feiqiu"})
+@ComponentScan(basePackages = {"com.zhiyuan.personal.feiqiu.*"})
 @SpringBootApplication(exclude= {DataSourceAutoConfiguration.class})
 public class FeiqiuApplication {
 
