@@ -25,7 +25,13 @@ public class JFriendPanelFactory{
     private static Integer WEIGHT = 280;
 
     //高度
-    private static Integer HEIGHT = 670;
+    private static Integer HEIGHT = 650;
+
+    //列表宽度
+    private static Integer LIST_WEIGHT = 260;
+
+    //列表高度
+    private static Integer LIST_HEIGHT = 640;
 
 
     /**
@@ -46,9 +52,11 @@ public class JFriendPanelFactory{
         JList friendList =  new JList(model);
         //应用自定义单元渲染器
         friendList.setCellRenderer(new FriendListCellRenderer());
+        //定义好友列表的字体及格式
         friendList.setFont(FONT);
-        friendList.setPreferredSize(new Dimension(WEIGHT, HEIGHT));
+        friendList.setPreferredSize(new Dimension(LIST_WEIGHT, LIST_HEIGHT));
         friendList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        //定义可滚动pane
         JScrollPane jsp = new JScrollPane(friendList);
         jsp.setPreferredSize(new Dimension(WEIGHT, HEIGHT));
 

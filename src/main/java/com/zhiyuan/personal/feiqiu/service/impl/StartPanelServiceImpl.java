@@ -1,7 +1,9 @@
 package com.zhiyuan.personal.feiqiu.service.impl;
 
+import com.zhiyuan.personal.feiqiu.dto.factory.LocalClientUserFacotry;
 import com.zhiyuan.personal.feiqiu.socket.LanSendService;
 import com.zhiyuan.personal.feiqiu.service.StartPanelService;
+import com.zhiyuan.personal.feiqiu.utils.IpUtils;
 import com.zhiyuan.personal.feiqiu.view.factory.StartPanelFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -21,6 +23,7 @@ public class StartPanelServiceImpl implements StartPanelService{
     @Override
     public void createAndShowGUI() {
         //0. 初始化当前用户
+        createLocalUser();
 
         //1. 广播本机上线
 
@@ -30,5 +33,19 @@ public class StartPanelServiceImpl implements StartPanelService{
         StartPanelFactory.getStartPanelInstance().showStartPanel();
 
         //4 更新好友列表
+    }
+
+    /**
+     * 功能描述: <br>
+     * 〈初始化当前用户〉
+     *
+     * @author zhiyuan.zhang01
+     * @param: []
+     * @return void
+     * @created 2020/7/9 18:03
+    */
+    private void createLocalUser() {
+        //获取当前机器的IP
+        LocalClientUserFacotry.getLocalClientInstance();
     }
 }

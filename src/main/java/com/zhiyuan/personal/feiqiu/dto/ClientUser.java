@@ -18,6 +18,7 @@ import javax.swing.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class ClientUser {
 
     //IP地址

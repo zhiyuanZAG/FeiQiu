@@ -31,7 +31,7 @@ public class FeiqiuApplication {
 		SpringApplication.run(FeiqiuApplication.class, args);
 		System.out.println("====server Started====");
 
-		// TODO: 2020/6/18 测试动态添加对象
+		// TODO: 2020/6/18 用于测试动态添加对象, 此处代码需屏蔽
 		try {
 			Thread.sleep(5000L);
 			System.out.println("开始添加对象");
