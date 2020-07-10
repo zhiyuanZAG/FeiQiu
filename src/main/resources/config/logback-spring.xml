@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<configuration>
+
+    <springProperty name="APP_HOME" source="app.log.app" defaultValue="feiqiu"/>
+    <springProperty name="LOG_HOME" source="app.log.home" defaultValue="logs"/>
+    <springProperty name="COMMON_LOG_PATTERN" source="app.log.pattern.common"
+                    defaultValue="[%thread] |-|%level |-|%d{yyyy-MM-dd'T'HH:mm:ss.SSS+08:00} |-|%logger{5}[%L] |-|%msg |-|%n"/>
+    <springProperty name="INFO_LOG_PATTERN" source="app.log.pattern.info"
+                    defaultValue="[%thread] |-|%level |-|%d{yyyy-MM-dd'T'HH:mm:ss.SSS+08:00} |-|%logger{5}[%L] |-|%msg |-|%n"/>
+    <springProperty name="ERROR_LOG_PATTERN" source="app.log.pattern.error"
+                    defaultValue="[%thread] |-|%level |-|%d{yyyy-MM-dd'T'HH:mm:ss.SSS+08:00} |-|%logger{5}[%L] |-|%msg |-|%n"/>
+
+    <!--控制台日志-->
+    <appender name="ConsoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${COMMON_LOG_PATTERN}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!--info日志-->
+    <appender name="InfoAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${LOG_HOME}/${APP_HOME}_info.log</File>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${INFO_LOG_PATTERN}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${LOG_HOME}/backup/${APP_HOME}_info.%d{yyyy-MM-dd}.log</FileNamePattern>
+        </rollingPolicy>
+    </appender>
+
+    <!--error日志-->
+    <appender name="ErrorAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${LOG_HOME}/${APP_HOME}_error.log</File>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${ERROR_LOG_PATTERN}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${LOG_HOME}/backup/${APP_HOME}_error.%d{yyyy-MM-dd}.log</FileNamePattern>
+        </rollingPolicy>
+    </appender>
+
+    <!--alert日志-->
+    <appender name="AlertMonitorAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${LOG_HOME}/Monitor_Alert.log</File>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>
+                ${LOG_HOME}/Monitor_Alert.%d{yyyy-MM-dd}.log
+            </fileNamePattern>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+        </encoder>
+    </appender>
+
+
+    <root level="INFO">
+        <appender-ref ref="ConsoleAppender"/>
+<!--        <appender-ref ref="InfoAppender"/>-->
+<!--        <appender-ref ref="ErrorAppender"/>-->
+<!--        <appender-ref ref="AlertMonitorAppender"/>-->
+    </root>
+
+</configuration>

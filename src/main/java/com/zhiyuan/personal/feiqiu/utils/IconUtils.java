@@ -2,10 +2,12 @@ package com.zhiyuan.personal.feiqiu.utils;
 
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 
 import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -19,8 +21,8 @@ import java.util.stream.Collectors;
 @Slf4j
 public class IconUtils {
 
-    @Value("iconPath")
-    private static String iconPath;
+//    @Value("iconPath")
+    private static String iconPath = "src/main/resources/icon";
 
     private static final String DEFAULT_ICON_NAME = "crown";
 
@@ -39,6 +41,7 @@ public class IconUtils {
     static {
         try {
             File file = new File(iconPath);
+//            log.info("filePaht = {}, 是否是文件夹: {}", file.getAbsolutePath(), file.isDirectory());
             if (file.isDirectory()) {
                 File[] iconNames = file.listFiles();
                 iconNameList = Arrays.stream(iconNames).map(File::getName).collect(Collectors.toList());
@@ -48,7 +51,7 @@ public class IconUtils {
             iconNameList = new ArrayList<>();
             iconNameList.add(DEFAULT_ICON_NAME);
         }
-        log.info("icon图片的name集合为: {}", JSONObject.toJSONString(iconNameList));
+//        log.info("icon图片的name集合为: {}", JSONObject.toJSONString(iconNameList));
     }
 
     /**

@@ -1,6 +1,8 @@
 package com.zhiyuan.personal.feiqiu.dto.factory;
 
+import com.alibaba.fastjson.JSONObject;
 import com.zhiyuan.personal.feiqiu.dto.ClientUser;
+import com.zhiyuan.personal.feiqiu.dto.LocalUser;
 import com.zhiyuan.personal.feiqiu.utils.IconUtils;
 import com.zhiyuan.personal.feiqiu.utils.IpUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +32,7 @@ public class LocalClientUserFacotry {
     private static final String DEFAULT_ICON_NAME = "crown";
 
     //本机
-    private static ClientUser localClient;
+    private static LocalUser localClient;
 
     public LocalClientUserFacotry() {
     }
@@ -65,7 +67,7 @@ public class LocalClientUserFacotry {
      * @return com.zhiyuan.personal.feiqiu.dto.ClientUser
      * @created 2020/6/17 18:53
      */
-    private static ClientUser createLocalClient() {
+    private static LocalUser createLocalClient() {
         // TODO: 2020/6/17 按照本机IP创建本机user
         String localIp = IpUtils.getLocalIP();
         String iconName = IconUtils.randomGenerateIcon();
@@ -80,11 +82,12 @@ public class LocalClientUserFacotry {
                 log.error("当前用户设置默认icon失败, e->{}", e.getMessage());
             }
         }
-        ClientUser local = ClientUser.builder()
+        LocalUser local = LocalUser.builder()
                 .hostIP(localIp)
                 .name(localIp)
                 .icon(icon)
                 .build();
+        log.info("组装local用户端->{}", JSONObject.toJSONString(local));
         return local;
     }
 }

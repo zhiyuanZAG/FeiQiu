@@ -29,7 +29,7 @@ public class FeiqiuApplication {
 
 		//启动应用
 		SpringApplication.run(FeiqiuApplication.class, args);
-		System.out.println("====server Started====");
+		System.out.println("====client Started====");
 
 		// TODO: 2020/6/18 用于测试动态添加对象, 此处代码需屏蔽
 		try {

@@ -1,6 +1,7 @@
 package com.zhiyuan.personal.feiqiu.dto;
 
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.swing.*;
 
@@ -15,14 +16,18 @@ import javax.swing.*;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
+@ToString(callSuper = true)
+@SuperBuilder(toBuilder = true)
 public class FriendUser extends ClientUser {
 
     //分组名
     private String groupName;
 
-    @Builder(toBuilder = true)
-    public FriendUser(String hostIP, String name, ImageIcon icon, String groupName) {
-        super(hostIP, name, icon);
-        this.groupName = groupName;
-    }
+//    @Builder(toBuilder = true)
+//    public FriendUser(String hostIP, String name, ImageIcon icon, String groupName) {
+//        super(hostIP, name, icon);
+//        this.groupName = groupName;
+//    }
+
 }

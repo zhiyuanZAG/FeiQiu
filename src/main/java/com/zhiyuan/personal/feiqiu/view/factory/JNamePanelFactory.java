@@ -1,8 +1,10 @@
 package com.zhiyuan.personal.feiqiu.view.factory;
 
+import com.alibaba.fastjson.JSONObject;
 import com.zhiyuan.personal.feiqiu.dto.ClientUser;
 import com.zhiyuan.personal.feiqiu.dto.factory.LocalClientUserFacotry;
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,6 +20,7 @@ import java.awt.*;
 @Data
 @Builder
 @AllArgsConstructor
+@Slf4j
 public class JNamePanelFactory {
 
     //宽度
@@ -44,9 +47,9 @@ public class JNamePanelFactory {
         jp.setSize(WEIGHT, HEIGHT);
         jp.setBackground(Color.PINK);
         ClientUser localClient = LocalClientUserFacotry.getLocalClientInstance();
-        //// TODO: 2020/6/17 需要展示真是用户IP信息
-        JLabel label = label = new JLabel("hostIP");
-//        JLabel label = label = new JLabel(localClient.getHostIP());
+        // TODO: 2020/6/17 需要展示真是用户IP信息
+        log.info("localUser->{}", JSONObject.toJSONString(localClient));
+        JLabel label = label = new JLabel(localClient.getHostIP());
 
         label.setFont(FONT);
         jp.add(label);
