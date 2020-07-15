@@ -1,8 +1,9 @@
 package com.zhiyuan.personal.feiqiu.utils;
 
-import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.util.ResourceUtils;
 
+import javax.swing.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,10 +22,13 @@ import java.util.stream.Collectors;
 @Slf4j
 public class IconUtils {
 
-//    @Value("iconPath")
+//    @Value("${iconPath}")
     private static String iconPath = "src/main/resources/icon";
 
     private static final String DEFAULT_ICON_NAME = "crown";
+
+    //文件路径分隔符
+    private static final String seperate = "/";
 
 
     public static List<String> iconNameList;
@@ -41,7 +45,6 @@ public class IconUtils {
     static {
         try {
             File file = new File(iconPath);
-//            log.info("filePaht = {}, 是否是文件夹: {}", file.getAbsolutePath(), file.isDirectory());
             if (file.isDirectory()) {
                 File[] iconNames = file.listFiles();
                 iconNameList = Arrays.stream(iconNames).map(File::getName).collect(Collectors.toList());
@@ -79,6 +82,25 @@ public class IconUtils {
      */
     public static List<String> getSortedNameList() {
         return iconNameList.stream().sorted().collect(Collectors.toList());
+    }
+
+    /**
+     * 功能描述: <br>
+     * 〈根据iconName, 从系统资源中获取对应的Icon〉
+     *
+     * @author zhiyuan.zhang01
+     * @param: [iconName]
+     * @return javax.swing.Icon
+     * @created 2020/7/15 16:53
+    */
+    public static ImageIcon getIconByName(String iconName) {
+        ImageIcon icon = null;
+        try {
+            icon = new ImageIcon(ResourceUtils.getURL(iconPath + seperate + iconName));
+        }  catch (Exception e) {
+            log.error("当前用户获取随机icon失败, e->{}", e.getMessage());
+        }
+        return icon;
     }
 
 

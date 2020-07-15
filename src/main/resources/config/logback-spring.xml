@@ -13,7 +13,7 @@
 
     <!--控制台日志-->
     <appender name="ConsoleAppender" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <pattern>${COMMON_LOG_PATTERN}</pattern>
             <charset>UTF-8</charset>
         </encoder>

@@ -7,14 +7,12 @@ import com.zhiyuan.personal.feiqiu.utils.IconUtils;
 import com.zhiyuan.personal.feiqiu.utils.IpUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-import org.springframework.util.ResourceUtils;
 
 import javax.swing.*;
 
 /**
  * 〈一句话功能简述〉<br>
- * 〈〉
+ * 〈本地用户client工厂〉
  *
  * @author zhiyuanzhang9
  * @create 2020/6/17 18:44
@@ -23,13 +21,8 @@ import javax.swing.*;
 @Slf4j
 public class LocalClientUserFacotry {
 
-    @Value("iconPath")
-    private static String iconPath;
-
-    //文件路径分隔符
-    private static final String seperate = "/";
-
-    private static final String DEFAULT_ICON_NAME = "crown";
+    @Value("${iconPath}")
+    private static String iconPath = "src/main/resources/icon";
 
     //本机
     private static LocalUser localClient;
@@ -41,11 +34,11 @@ public class LocalClientUserFacotry {
      * 功能描述: <br>
      * 〈初始化创建当前客户端实例〉
      *
+     * @return com.zhiyuan.personal.feiqiu.dto.ClientUser
      * @author zhiyuan.zhang01
      * @param: []
-     * @return com.zhiyuan.personal.feiqiu.dto.ClientUser
      * @created 2020/7/9 18:11
-    */
+     */
     public static ClientUser getLocalClientInstance() {
         if (null == localClient) {
             synchronized (LocalClientUserFacotry.class) {
@@ -62,30 +55,19 @@ public class LocalClientUserFacotry {
      * 功能描述: <br>
      * 〈创建本机用户〉
      *
+     * @return com.zhiyuan.personal.feiqiu.dto.ClientUser
      * @author zhiyuan.zhang01
      * @param: []
-     * @return com.zhiyuan.personal.feiqiu.dto.ClientUser
      * @created 2020/6/17 18:53
      */
     private static LocalUser createLocalClient() {
-        // TODO: 2020/6/17 按照本机IP创建本机user
+        //2020/6/17 按照本机IP创建本机user
         String localIp = IpUtils.getLocalIP();
         String iconName = IconUtils.randomGenerateIcon();
-        ImageIcon icon = new ImageIcon();
-        try {
-            new ImageIcon(ResourceUtils.getURL(iconPath + seperate + iconName));
-        } catch (Exception e) {
-            log.error("当前用户获取随机icon失败, e->{}", e.getMessage());
-            try {
-                icon = new ImageIcon(ResourceUtils.getURL(iconPath + seperate + DEFAULT_ICON_NAME));
-            } catch (Exception e1) {
-                log.error("当前用户设置默认icon失败, e->{}", e.getMessage());
-            }
-        }
         LocalUser local = LocalUser.builder()
                 .hostIP(localIp)
                 .name(localIp)
-                .icon(icon)
+                .iconName(iconName)
                 .build();
         log.info("组装local用户端->{}", JSONObject.toJSONString(local));
         return local;

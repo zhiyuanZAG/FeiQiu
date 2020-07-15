@@ -29,7 +29,7 @@ public class ClientUser {
     String name;
 
     //用户头像
-    ImageIcon icon;
+    String iconName;
 
 
 }

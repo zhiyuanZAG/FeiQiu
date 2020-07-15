@@ -1,6 +1,7 @@
 package com.zhiyuan.personal.feiqiu.renderer;
 
 import com.zhiyuan.personal.feiqiu.dto.FriendUser;
+import com.zhiyuan.personal.feiqiu.utils.IconUtils;
 import org.springframework.util.ResourceUtils;
 
 import javax.swing.*;
@@ -29,18 +30,14 @@ public class FriendListCellRenderer extends JLabel implements ListCellRenderer {
         String text = "<html> hostIP: " + user.getHostIP() + "<br/> hostName: " + user.getName() + "<html/>";
 
         //显示用户头像
-        ImageIcon icon;
-
-        try {
-            if (null == user.getIcon()) {
-                icon = new ImageIcon(new ImageIcon(ResourceUtils.getURL("classpath:icon/crown.png")).getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
-            } else {
-                icon = new ImageIcon(user.getIcon().getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
-            }
-            setIcon(icon);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        ImageIcon temp = null;
+        if (null == user.getIconName()) {
+            temp = IconUtils.getIconByName(IconUtils.randomGenerateIcon());
+        } else {
+            temp = IconUtils.getIconByName(user.getIconName());
         }
+        setIcon(new ImageIcon(temp.getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT)));
+
         //设置头像与用户名的间隔.
         setIconTextGap(25);
 

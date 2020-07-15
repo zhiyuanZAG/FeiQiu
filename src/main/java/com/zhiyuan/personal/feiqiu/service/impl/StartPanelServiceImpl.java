@@ -1,11 +1,15 @@
 package com.zhiyuan.personal.feiqiu.service.impl;
 
+import com.zhiyuan.personal.feiqiu.constant.UdpMsgTypeEnum;
+import com.zhiyuan.personal.feiqiu.dto.ClientUser;
 import com.zhiyuan.personal.feiqiu.dto.factory.LocalClientUserFacotry;
+import com.zhiyuan.personal.feiqiu.service.UdpService;
 import com.zhiyuan.personal.feiqiu.socket.LanSendService;
 import com.zhiyuan.personal.feiqiu.service.StartPanelService;
 import com.zhiyuan.personal.feiqiu.utils.IpUtils;
 import com.zhiyuan.personal.feiqiu.view.factory.StartPanelFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * 〈一句话功能简述〉<br>
@@ -15,17 +19,22 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @create 2020/6/19 16:24
  * @since 1.0.0
  */
+@Service
 public class StartPanelServiceImpl implements StartPanelService{
 
+//    @Autowired
+//    LanSendService lanSendService;
+
     @Autowired
-    LanSendService lanSendService;
+    UdpService udpService;
 
     @Override
     public void createAndShowGUI() {
         //0. 初始化当前用户
-        createLocalUser();
+        ClientUser local = createLocalUser();
 
         //1. 广播本机上线
+        udpService.sendMsg(UdpMsgTypeEnum.ONLINE, local, null);
 
         //2. 接收所有在线用户
 
@@ -44,8 +53,8 @@ public class StartPanelServiceImpl implements StartPanelService{
      * @return void
      * @created 2020/7/9 18:03
     */
-    private void createLocalUser() {
+    private ClientUser createLocalUser() {
         //获取当前机器的IP
-        LocalClientUserFacotry.getLocalClientInstance();
+        return LocalClientUserFacotry.getLocalClientInstance();
     }
 }

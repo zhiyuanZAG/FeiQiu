@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
  * @create 2020/6/19 16:21
  * @since 1.0.0
  */
-@Service
 public interface StartPanelService {
 
     /**
