@@ -17,7 +17,9 @@ public interface UdpService {
 
     /**
      * 功能描述: <br>
-     * 〈发送udp广播消息〉
+     * 〈发送udp广播消息
+     *      定义UDP发送协议:<br>
+     *          在线状态:主机IP:name:iconName:msg〉
      *
      * @return void
      * @author zhiyuan.zhang01

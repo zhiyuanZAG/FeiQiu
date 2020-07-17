@@ -47,8 +47,9 @@ public class JFriendPanelFactory{
         JPanel jp = new JPanel();
         jp.setBackground(Color.white);
 
-        //好友列表
+        //可变好友列表
         DefaultListModel model = FriendDefaultListModelFactory.getListModelInstance();
+        //构建Jlist
         JList friendList =  new JList(model);
         //应用自定义单元渲染器
         friendList.setCellRenderer(new FriendListCellRenderer());

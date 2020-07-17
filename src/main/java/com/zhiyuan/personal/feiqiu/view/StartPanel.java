@@ -31,9 +31,9 @@ public class StartPanel {
     //面板高度
     private static Integer HEIGHT = 760;
     //V方向组件间间隔(像素)
-    private static Integer VGAP = 2;
+    private static Integer V_GAP = 2;
     //H方向组件间间隔(像素)
-    private static Integer HGAP = 3;
+    private static Integer H_GAP = 3;
 
     //个人信息面板
     private JPanel namePanel;
@@ -64,7 +64,7 @@ public class StartPanel {
         }
         JFrame frame = new JFrame("feiQiu");
         frame.setBounds(POSITION_X, POSITION_Y, WIDTH, HEIGHT);
-        frame.setLayout(new BorderLayout(HGAP, VGAP));
+        frame.setLayout(new BorderLayout(H_GAP, V_GAP));
         frame.add(namePanel, BorderLayout.NORTH);
         frame.add(friendPanel, BorderLayout.CENTER);
         frame.add(toolPanel, BorderLayout.SOUTH);

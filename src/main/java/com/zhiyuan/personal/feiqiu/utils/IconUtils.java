@@ -1,6 +1,8 @@
 package com.zhiyuan.personal.feiqiu.utils;
 
+import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.ResourceUtils;
 
 import javax.swing.*;
@@ -23,7 +25,7 @@ import java.util.stream.Collectors;
 public class IconUtils {
 
 //    @Value("${iconPath}")
-    private static String iconPath = "src/main/resources/icon";
+    private static String iconPath = "src/main/resources/icon" ;
 
     private static final String DEFAULT_ICON_NAME = "crown";
 

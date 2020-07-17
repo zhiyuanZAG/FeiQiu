@@ -21,9 +21,6 @@ import javax.swing.*;
 @Slf4j
 public class LocalClientUserFacotry {
 
-    @Value("${iconPath}")
-    private static String iconPath = "src/main/resources/icon";
-
     //本机
     private static LocalUser localClient;
 

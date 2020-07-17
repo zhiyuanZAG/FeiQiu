@@ -39,3 +39,16 @@
    4. 软件关闭下线时，使用UDP协议局域网内广播下线消息：
         * 下线机器使用UDP广播当前机器下线， 需要附带该机器的IP；
         * 其他机器收到UDP消息后，需要将该机器从上线用户列表中剔除，但是并不需要回复消息。
+
+
+## 项目启动(注意):
+1. 项目启动时, 需要添加启动参数: -Djava.net.preferIPv4Stack=true
+* 否则, 在连接无线网的情况下, 接收/发送udp的组播消息会报异常:
+
+  `java.net.SocketException: Can't assign requested address`
+
+
+
+
+
+

@@ -28,4 +28,17 @@ public class UdpMsgStringUtils {
     public static String builderUdpMsg(UdpMsgTypeEnum typeEnum, ClientUser user, String msg) {
         return typeEnum.getIndex() + SEPERATOR + user.getHostIP() + SEPERATOR + user.getName() + SEPERATOR + user.getIconName() + SEPERATOR + msg;
     }
+
+    /**
+     * 功能描述: <br>
+     * 〈解析接收到的udp消息〉
+     *
+     * @author zhiyuan.zhang01
+     * @param: [msg]
+     * @return java.lang.String[]
+     * @created 2020/7/16 18:16
+    */
+    public static String[] encodeUdpMsg(String msg) {
+        return msg.split(SEPERATOR);
+    }
 }

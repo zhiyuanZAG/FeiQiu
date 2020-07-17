@@ -3,6 +3,7 @@ package com.zhiyuan.personal.feiqiu.service.impl;
 import com.zhiyuan.personal.feiqiu.constant.UdpMsgTypeEnum;
 import com.zhiyuan.personal.feiqiu.dto.ClientUser;
 import com.zhiyuan.personal.feiqiu.dto.factory.LocalClientUserFacotry;
+import com.zhiyuan.personal.feiqiu.service.AsyncService;
 import com.zhiyuan.personal.feiqiu.service.UdpService;
 import com.zhiyuan.personal.feiqiu.socket.LanSendService;
 import com.zhiyuan.personal.feiqiu.service.StartPanelService;
@@ -22,26 +23,23 @@ import org.springframework.stereotype.Service;
 @Service
 public class StartPanelServiceImpl implements StartPanelService{
 
-//    @Autowired
-//    LanSendService lanSendService;
-
     @Autowired
     UdpService udpService;
+
+    @Autowired
+    AsyncService asyncService;
 
     @Override
     public void createAndShowGUI() {
         //0. 初始化当前用户
         ClientUser local = createLocalUser();
-
         //1. 广播本机上线
         udpService.sendMsg(UdpMsgTypeEnum.ONLINE, local, null);
-
-        //2. 接收所有在线用户
-
-        //3. 展开启动页面
+        //2. 展开启动页面
         StartPanelFactory.getStartPanelInstance().showStartPanel();
+        //3. 接收所有在线用户& 刷新好友列表
+        asyncService.executeReceiveUDPMsg();
 
-        //4 更新好友列表
     }
 
     /**

@@ -38,7 +38,6 @@ public class FeiqiuApplication {
 			}
 		}.execute();
 
-
 		System.out.println("====client Started====");
 
 		// TODO: 2020/6/18 用于测试动态添加对象, 此处代码需屏蔽

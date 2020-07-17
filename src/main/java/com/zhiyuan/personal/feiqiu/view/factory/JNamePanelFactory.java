@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Arrays;
 
 /**
  * 〈一句话功能简述〉<br>
@@ -27,10 +28,10 @@ public class JNamePanelFactory {
     private static Integer WEIGHT = 290;
 
     //高度
-    private static Integer HEIGHT = 60;
+    private static Integer HEIGHT = 80;
 
     //字体
-    private static Font FONT = new Font("楷体", Font.BOLD, 40);
+    private static Font FONT = new Font("楷体", Font.BOLD, 15);
 
 
     /**
@@ -47,7 +48,10 @@ public class JNamePanelFactory {
         jp.setSize(WEIGHT, HEIGHT);
         jp.setBackground(Color.PINK);
         ClientUser localClient = LocalClientUserFacotry.getLocalClientInstance();
-        // TODO: 2020/6/17 需要展示真是用户IP信息
+
+        
+        JList<ClientUser> localClientList = new JList();
+        // TODO: 2020/6/17 需要展示真实用户IP信息
         log.info("localUser->{}", JSONObject.toJSONString(localClient));
         JLabel label = label = new JLabel(localClient.getHostIP());
 
