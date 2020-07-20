@@ -23,7 +23,7 @@ public class NamePanelCellRender extends JLabel implements ListCellRenderer {
         ClientUser user = (ClientUser) value;
 
         //展示信息格式
-        String text = "<html> IP: " + user.getHostIP() + "<br/> Name: " + user.getName() + "<html/>";
+        String text = "<html> <p style=\"line-height:5; font-size:12px;\"> IP: " + user.getHostIP() + "<br/> Name: " + user.getName() + "</p> <html/>";
 
         //显示用户头像
         ImageIcon temp = null;
@@ -35,8 +35,9 @@ public class NamePanelCellRender extends JLabel implements ListCellRenderer {
         setIcon(new ImageIcon(temp.getImage().getScaledInstance(60, 60, Image.SCALE_DEFAULT)));
 
         //设置头像与用户名的间隔.
-        setIconTextGap(50);
+        setIconTextGap(35);
 
+        System.out.println(text);
         setText(text);
         return this;
     }

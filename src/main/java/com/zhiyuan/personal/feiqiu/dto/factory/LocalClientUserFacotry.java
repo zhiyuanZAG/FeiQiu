@@ -24,6 +24,9 @@ public class LocalClientUserFacotry {
     //本机
     private static LocalUser localClient;
 
+    //分隔符
+    public static final String SEPERATOR = "\\.";
+
     public LocalClientUserFacotry() {
     }
 
@@ -60,10 +63,16 @@ public class LocalClientUserFacotry {
     private static LocalUser createLocalClient() {
         //2020/6/17 按照本机IP创建本机user
         String localIp = IpUtils.getLocalIP();
+
+        String[] ipList = localIp.split(SEPERATOR);
+        String suffix = "";
+        if (null != ipList && ipList.length > 0) {
+            suffix = ipList[3];
+        }
         String iconName = IconUtils.randomGenerateIcon();
         LocalUser local = LocalUser.builder()
                 .hostIP(localIp)
-                .name(localIp)
+                .name("用户" + suffix)
                 .iconName(iconName)
                 .build();
         log.info("组装local用户端->{}", JSONObject.toJSONString(local));

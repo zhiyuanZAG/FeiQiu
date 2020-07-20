@@ -27,7 +27,7 @@ public class FriendListCellRenderer extends JLabel implements ListCellRenderer {
          *      hostIP
          *      hostName
          */
-        String text = "<html> hostIP: " + user.getHostIP() + "<br/> hostName: " + user.getName() + "<html/>";
+        String text = "<html> <p style=\"line-height:5; font-size:10px;\"> hostIP: " + user.getHostIP() + "<br/> hostName: " + user.getName() + "<html/>";
 
         //显示用户头像
         ImageIcon temp = null;
