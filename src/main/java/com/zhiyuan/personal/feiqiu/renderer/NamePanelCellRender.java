@@ -23,7 +23,7 @@ public class NamePanelCellRender extends JLabel implements ListCellRenderer {
         ClientUser user = (ClientUser) value;
 
         //展示信息格式
-        String text = "<html> <p style=\"line-height:5; font-size:12px;\"> IP: " + user.getHostIP() + "<br/> Name: " + user.getName() + "</p> <html/>";
+        String text = "<html><div style=\"font-size:12px;\"> <p style=\"padding-bottom:8px;\"> IP: " + user.getHostIP() + "</p><p> Name: " + user.getName() + "</p></div> <html/>";
 
         //显示用户头像
         ImageIcon temp = null;
