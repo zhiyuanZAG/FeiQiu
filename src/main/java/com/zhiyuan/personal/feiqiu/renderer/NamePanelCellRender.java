@@ -2,6 +2,7 @@ package com.zhiyuan.personal.feiqiu.renderer;
 
 import com.zhiyuan.personal.feiqiu.dto.ClientUser;
 import com.zhiyuan.personal.feiqiu.utils.IconUtils;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,6 +15,7 @@ import java.awt.*;
  * @create 2020/7/17 17:40
  * @since 1.0
  */
+@Slf4j
 public class NamePanelCellRender extends JLabel implements ListCellRenderer {
 
     @Override
@@ -37,7 +39,7 @@ public class NamePanelCellRender extends JLabel implements ListCellRenderer {
         //设置头像与用户名的间隔.
         setIconTextGap(35);
 
-        System.out.println(text);
+//        log.info("name面板重新渲染: {}", text);
         setText(text);
         return this;
     }

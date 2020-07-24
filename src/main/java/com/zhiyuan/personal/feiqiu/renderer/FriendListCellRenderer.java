@@ -7,6 +7,7 @@ import org.springframework.util.ResourceUtils;
 import javax.swing.*;
 import java.awt.*;
 import java.io.FileNotFoundException;
+import java.util.Optional;
 
 /**
  * 〈一句话功能简述〉<br>
@@ -22,6 +23,11 @@ public class FriendListCellRenderer extends JLabel implements ListCellRenderer {
     public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
         FriendUser user = (FriendUser) value;
 
+        //被选中后变色
+        if (isSelected) {
+            setBackground(Color.PINK);
+        }
+
         /**
          * 设置jLable的文字
          *      hostIP
@@ -30,15 +36,11 @@ public class FriendListCellRenderer extends JLabel implements ListCellRenderer {
         String text = "<html> <p style=\"line-height:5; font-size:10px;\"> hostIP: " + user.getHostIP() + "<br/> hostName: " + user.getName() + "<html/>";
 
         //显示用户头像
-        ImageIcon temp = null;
-        if (null == user.getIconName()) {
-            temp = IconUtils.getIconByName(IconUtils.randomGenerateIcon());
-        } else {
-            temp = IconUtils.getIconByName(user.getIconName());
-        }
+        user.setIconName(Optional.ofNullable(user.getIconName()).orElse(IconUtils.randomGenerateIcon()));
+        ImageIcon temp = IconUtils.getIconByName(user.getIconName());
         setIcon(new ImageIcon(temp.getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT)));
 
-        //设置头像与用户名的间隔.
+        //设置头像与用户名的间隔 25px
         setIconTextGap(25);
 
         setText(text);

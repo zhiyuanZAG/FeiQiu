@@ -1,11 +1,19 @@
 package com.zhiyuan.personal.feiqiu.view.factory;
 
+import com.alibaba.fastjson.JSONObject;
+import com.zhiyuan.personal.feiqiu.dto.FriendUser;
 import com.zhiyuan.personal.feiqiu.renderer.FriendListCellRenderer;
 import lombok.Builder;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
+import sun.rmi.runtime.Log;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 /**
  * 〈一句话功能简述〉<br>
@@ -17,6 +25,7 @@ import java.awt.*;
  */
 @Data
 @Builder
+@Slf4j
 public class JFriendPanelFactory{
 
     private static Font FONT = new Font("楷体", Font.BOLD, 20);
@@ -56,7 +65,48 @@ public class JFriendPanelFactory{
         //定义好友列表的字体及格式
         friendList.setFont(FONT);
         friendList.setPreferredSize(new Dimension(LIST_WEIGHT, LIST_HEIGHT));
-        friendList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        friendList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);   //列表内容只可单选
+        //注册选项监视器
+        friendList.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                FriendUser user = (FriendUser) friendList.getSelectedValue();
+                log.info("已选择的好友项为: {}", JSONObject.toJSONString(user));
+            }
+        });
+        //注册动作事件监视器
+        friendList.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                //响应双击实现
+                if (e.getClickCount() == 2) {
+                    FriendUser user = (FriendUser) friendList.getSelectedValue();
+                    log.info("双击选择的好友项为: {}", JSONObject.toJSONString(user));
+                    //提交线程池, 展示聊天窗口
+                }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
+
         //定义可滚动pane
         JScrollPane jsp = new JScrollPane(friendList);
         jsp.setPreferredSize(new Dimension(WEIGHT, HEIGHT));

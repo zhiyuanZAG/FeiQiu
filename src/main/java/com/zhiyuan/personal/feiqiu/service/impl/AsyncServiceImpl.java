@@ -23,7 +23,7 @@ public class AsyncServiceImpl implements AsyncService {
 
 
     @Override
-    @Async("")
+    @Async("singleAsyncServiceExecutor")
     public void executeReceiveUDPMsg() {
         lanSendService.udpMsgReceive();
     }
