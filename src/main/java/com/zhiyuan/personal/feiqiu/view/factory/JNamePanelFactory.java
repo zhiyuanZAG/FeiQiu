@@ -55,10 +55,8 @@ public class JNamePanelFactory {
         localClientList.setCellRenderer(new NamePanelCellRender());
         localClientList.setFont(FONT);
         localClientList.setBackground(Color.PINK);
-        // TODO: 2020/6/17 需要展示真实用户IP信息
+        // 2020/6/17 需要展示真实用户IP信息
         log.info("localUser->{}", JSONObject.toJSONString(localClient));
-//        JLabel label = label = new JLabel(localClient.getHostIP());
-//        label.setFont(FONT);
         jp.add(localClientList);
         model.add(0, localClient);
         return jp;

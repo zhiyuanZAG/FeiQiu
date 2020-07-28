@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Optional;
 
 /**
  * 〈一句话功能简述〉<br>
@@ -26,21 +27,14 @@ public class NamePanelCellRender extends JLabel implements ListCellRenderer {
 
         //展示信息格式
         String text = "<html><div style=\"font-size:12px;\"> <p style=\"padding-bottom:8px;\"> IP: " + user.getHostIP() + "</p><p> Name: " + user.getName() + "</p></div> <html/>";
+        setText(text);
 
         //显示用户头像
-        ImageIcon temp = null;
-        if (null == user.getIconName()) {
-            temp = IconUtils.getIconByName(IconUtils.randomGenerateIcon());
-        } else {
-            temp = IconUtils.getIconByName(user.getIconName());
-        }
-        setIcon(new ImageIcon(temp.getImage().getScaledInstance(60, 60, Image.SCALE_DEFAULT)));
+        user.setIconName(Optional.ofNullable(user.getIconName()).orElse(IconUtils.randomGenerateIcon()));
+        setIcon(IconUtils.getSizedIconByName(user.getIconName(), 40, 40));
 
         //设置头像与用户名的间隔.
         setIconTextGap(35);
-
-//        log.info("name面板重新渲染: {}", text);
-        setText(text);
         return this;
     }
 }

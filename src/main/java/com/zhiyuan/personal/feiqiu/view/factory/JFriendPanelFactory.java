@@ -82,7 +82,7 @@ public class JFriendPanelFactory{
                 if (e.getClickCount() == 2) {
                     FriendUser user = (FriendUser) friendList.getSelectedValue();
                     log.info("双击选择的好友项为: {}", JSONObject.toJSONString(user));
-                    //提交线程池, 展示聊天窗口
+                    //提交线程池, 显示聊天窗口
                 }
             }
 

@@ -1,11 +1,10 @@
 package com.zhiyuan.personal.feiqiu.utils;
 
-import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.ResourceUtils;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -103,6 +102,27 @@ public class IconUtils {
             log.error("当前用户获取随机icon失败, e->{}", e.getMessage());
         }
         return icon;
+    }
+
+    /**
+     * 功能描述: <br>
+     * 〈根据iconName, 从系统资源中获取指定大小的Icon〉
+     *
+     * @author zhiyuan.zhang01
+     * @param: [iconName, width, height]
+     * @return javax.swing.ImageIcon
+     * @created 2020/7/28 17:31
+    */
+    public static ImageIcon getSizedIconByName(String iconName, int width, int height) {
+        ImageIcon icon = null;
+        try {
+            ImageIcon temp = new ImageIcon(ResourceUtils.getURL(iconPath + seperate + iconName));
+            icon = new ImageIcon(temp.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
+        }  catch (Exception e) {
+            log.error("当前用户获取随机icon失败, e->{}", e.getMessage());
+        }
+        return icon;
+
     }
 
 

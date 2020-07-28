@@ -6,7 +6,7 @@ import javax.swing.*;
 
 /**
  * 〈一句话功能简述〉<br>
- * 〈〉
+ * 〈工具面板实体类〉
  *
  * @author zhiyuanzhang9
  * @create 2020/6/16 19:06

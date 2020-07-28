@@ -37,8 +37,7 @@ public class FriendListCellRenderer extends JLabel implements ListCellRenderer {
 
         //显示用户头像
         user.setIconName(Optional.ofNullable(user.getIconName()).orElse(IconUtils.randomGenerateIcon()));
-        ImageIcon temp = IconUtils.getIconByName(user.getIconName());
-        setIcon(new ImageIcon(temp.getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT)));
+        setIcon(IconUtils.getSizedIconByName(user.getIconName(), 40, 40));
 
         //设置头像与用户名的间隔 25px
         setIconTextGap(25);

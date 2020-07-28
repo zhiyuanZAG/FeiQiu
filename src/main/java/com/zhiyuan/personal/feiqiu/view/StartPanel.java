@@ -10,7 +10,7 @@ import java.awt.*;
 
 /**
  * 〈一句话功能简述〉<br>
- * 〈应用打开后, 展示的好友列表页〉
+ * 〈开始面板实体类〉
  *
  * @author zhiyuanzhang9
  * @create 2020/6/16 16:13
@@ -50,14 +50,14 @@ public class StartPanel {
 
     /**
      * 功能描述: <br>
-     * 〈展示开始面板〉
+     * 〈展示当前面板〉
      *
      * @author zhiyuan.zhang01
      * @param: []
      * @return void
      * @created 2020/6/16 19:14
      */
-    public void showStartPanel(){
+    private void show(){
         if (isOpen) {
             System.out.println("限制只能打开一个主面板");
             return;
