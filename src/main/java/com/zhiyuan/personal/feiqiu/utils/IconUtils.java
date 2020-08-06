@@ -1,5 +1,6 @@
 package com.zhiyuan.personal.feiqiu.utils;
 
+import com.zhiyuan.personal.feiqiu.constant.ToolIconEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.ResourceUtils;
 
@@ -29,7 +30,10 @@ public class IconUtils {
     private static final String DEFAULT_ICON_NAME = "crown";
 
     //文件路径分隔符
-    private static final String seperate = "/";
+    private static final String SEPERATOR = "/";
+
+    //工具icon的path
+    private static final String TOOL_PATH = "tool";
 
 
     public static List<String> iconNameList;
@@ -97,7 +101,7 @@ public class IconUtils {
     public static ImageIcon getIconByName(String iconName) {
         ImageIcon icon = null;
         try {
-            icon = new ImageIcon(ResourceUtils.getURL(iconPath + seperate + iconName));
+            icon = new ImageIcon(ResourceUtils.getURL(iconPath + SEPERATOR + iconName));
         }  catch (Exception e) {
             log.error("当前用户获取随机icon失败, e->{}", e.getMessage());
         }
@@ -116,13 +120,32 @@ public class IconUtils {
     public static ImageIcon getSizedIconByName(String iconName, int width, int height) {
         ImageIcon icon = null;
         try {
-            ImageIcon temp = new ImageIcon(ResourceUtils.getURL(iconPath + seperate + iconName));
+            ImageIcon temp = new ImageIcon(ResourceUtils.getURL(iconPath + SEPERATOR + iconName));
             icon = new ImageIcon(temp.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
         }  catch (Exception e) {
             log.error("当前用户获取随机icon失败, e->{}", e.getMessage());
         }
         return icon;
+    }
 
+    /**
+     * 功能描述: <br>
+     * 〈根据iconName, 从系统资源中获取指定大小的Icon〉
+     *
+     * @author zhiyuan.zhang01
+     * @param: [iconName, width, height]
+     * @return javax.swing.ImageIcon
+     * @created 2020/8/6 18:24
+    */
+    public static ImageIcon getToolIconByName(ToolIconEnum iconName, int width, int height) {
+        ImageIcon icon = null;
+        try {
+            ImageIcon temp = new ImageIcon(ResourceUtils.getURL(iconPath + SEPERATOR + TOOL_PATH + SEPERATOR + iconName.name));
+            icon = new ImageIcon(temp.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
+        }  catch (Exception e) {
+            log.error("当前用户获取随机icon失败, e->{}", e.getMessage());
+        }
+        return icon;
     }
 
 

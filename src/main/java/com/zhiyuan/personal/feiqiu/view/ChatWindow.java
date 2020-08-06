@@ -1,5 +1,6 @@
 package com.zhiyuan.personal.feiqiu.view;
 
+import com.zhiyuan.personal.feiqiu.constant.ToolIconEnum;
 import com.zhiyuan.personal.feiqiu.dto.ClientUser;
 import com.zhiyuan.personal.feiqiu.utils.DateUtils;
 import com.zhiyuan.personal.feiqiu.utils.IconUtils;
@@ -7,6 +8,8 @@ import lombok.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
 
 /**
@@ -27,7 +30,6 @@ public class ChatWindow extends JFrame {
     private static final Integer FRAME_GAP_H = 2;
     //FRAM面板的X轴布局间隔
     private static final Integer FRAME_GAP_V = 5;
-
     //pannel面板的y轴布局间隔
     private static final Integer PANEL_GAP_H = 2;
     //pannel面板的X轴布局间隔
@@ -35,6 +37,8 @@ public class ChatWindow extends JFrame {
 
     //工具栏的高度
     private static final Integer TOOL_BAR_HEIGHT = 10;
+    //工具栏图标高度
+    private static final Integer TOOL_BAR_ICON_HEIGHT = 8;
 
     //字体
     private static Font FONT = new Font("宋体", Font.BOLD, 12);
@@ -96,8 +100,14 @@ public class ChatWindow extends JFrame {
         jScrollPane.setSize(CHAT_AREA.getSize());
         southFrameLeftPanel.add(jScrollPane, BorderLayout.NORTH);
         //左半部分-中(工具栏: 暂时只添加传文件的按钮)
-        // TODO: 2020/8/5 待添加工具栏 + 接收到消息后, 需要进行窗口注册
+        JToolBar toolBar = createToolBar();
+        toolBar.setSize(southFrameLeftPanel.getSize().width, TOOL_BAR_HEIGHT);  //设置工具栏大小
+        southFrameLeftPanel.add(toolBar, BorderLayout.CENTER);
         //左半部分-下(输入框+发送按钮: 输入聊天内容)
+        // TODO: 2020/8/6 聊天窗口的文本输入框 && 接收到消息后, 需要进行窗口注册
+        JTextArea inputArea = createInputArea();
+        inputArea.setSize(southFrameLeftPanel.getSize().width, southFrameLeftPanel.getSize().height - TOOL_BAR_HEIGHT - jScrollPane.getSize().height);  //设置文本输入框的大小
+        southFrameLeftPanel.add(inputArea, BorderLayout.SOUTH);
         southFramePanel.add(southFrameLeftPanel, BorderLayout.CENTER);
 
         //|-->底部面板的右半部分
@@ -110,6 +120,46 @@ public class ChatWindow extends JFrame {
 
         this.add(southFramePanel, BorderLayout.SOUTH);  //窗口底部的内容面板
         this.setVisible(true);
+    }
+
+    /**
+     * 功能描述: <br>
+     * 〈创建聊天输入的文本域〉
+     *
+     * @author zhiyuan.zhang01
+     * @param: []
+     * @return javax.swing.JTextArea
+     * @created 2020/8/6 18:56
+    */
+    private JTextArea createInputArea() {
+        JTextArea inputArea = new JTextArea();
+        // TODO: 2020/8/6 构建聊天窗口的输入框 + 挂载一个回车键的监听器(监听回车发送聊天内容)
+
+
+        return inputArea;
+    }
+
+    /**
+     * 功能描述: <br>
+     * 〈创建一个聊天窗口工具栏〉
+     *
+     * @author zhiyuan.zhang01
+     * @param: []
+     * @return javax.swing.JToolBar
+     * @created 2020/8/6 18:05
+    */
+    private JToolBar createToolBar() {
+        JToolBar toolBar = new JToolBar();
+        toolBar.setFloatable(false);    //不允许移动该工具栏
+        JButton sendFile = new JButton(IconUtils.getToolIconByName(ToolIconEnum.SEND_FILE, TOOL_BAR_ICON_HEIGHT, TOOL_BAR_ICON_HEIGHT));    //添加一个发送文件的按钮
+        sendFile.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // TODO: 2020/8/6 聊天窗口工具栏, 需要挂载一个发送文件的监听事件(在sendFile的按钮上)
+            }
+        });
+        toolBar.add(sendFile);
+        return toolBar;
     }
 
     /**
