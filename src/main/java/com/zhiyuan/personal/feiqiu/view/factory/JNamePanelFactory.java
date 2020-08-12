@@ -3,11 +3,13 @@ package com.zhiyuan.personal.feiqiu.view.factory;
 import com.alibaba.fastjson.JSONObject;
 import com.zhiyuan.personal.feiqiu.dto.ClientUser;
 import com.zhiyuan.personal.feiqiu.dto.factory.LocalClientUserFacotry;
+import com.zhiyuan.personal.feiqiu.renderer.NamePanelCellRender;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Arrays;
 
 /**
  * 〈一句话功能简述〉<br>
@@ -27,10 +29,10 @@ public class JNamePanelFactory {
     private static Integer WEIGHT = 290;
 
     //高度
-    private static Integer HEIGHT = 60;
+    private static Integer HEIGHT = 100;
 
     //字体
-    private static Font FONT = new Font("楷体", Font.BOLD, 40);
+    private static Font FONT = new Font("宋体", Font.BOLD, 40);
 
 
     /**
@@ -47,12 +49,16 @@ public class JNamePanelFactory {
         jp.setSize(WEIGHT, HEIGHT);
         jp.setBackground(Color.PINK);
         ClientUser localClient = LocalClientUserFacotry.getLocalClientInstance();
-        // TODO: 2020/6/17 需要展示真是用户IP信息
-        log.info("localUser->{}", JSONObject.toJSONString(localClient));
-        JLabel label = label = new JLabel(localClient.getHostIP());
 
-        label.setFont(FONT);
-        jp.add(label);
+        DefaultListModel model = NameDefaultListModelFactory.getDefaultListInstance();
+        JList<ClientUser> localClientList = new JList(model);
+        localClientList.setCellRenderer(new NamePanelCellRender());
+        localClientList.setFont(FONT);
+        localClientList.setBackground(Color.PINK);
+        // 2020/6/17 需要展示真实用户IP信息
+        log.info("localUser->{}", JSONObject.toJSONString(localClient));
+        jp.add(localClientList);
+        model.add(0, localClient);
         return jp;
     }
 }

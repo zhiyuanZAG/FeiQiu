@@ -1,11 +1,13 @@
 package com.zhiyuan.personal.feiqiu.renderer;
 
 import com.zhiyuan.personal.feiqiu.dto.FriendUser;
+import com.zhiyuan.personal.feiqiu.utils.IconUtils;
 import org.springframework.util.ResourceUtils;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.FileNotFoundException;
+import java.util.Optional;
 
 /**
  * 〈一句话功能简述〉<br>
@@ -21,27 +23,23 @@ public class FriendListCellRenderer extends JLabel implements ListCellRenderer {
     public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
         FriendUser user = (FriendUser) value;
 
+        //被选中后变色
+        if (isSelected) {
+            setBackground(Color.PINK);
+        }
+
         /**
          * 设置jLable的文字
-         *      用户IP
-         *      用户名
+         *      hostIP
+         *      hostName
          */
-        String text = "<html> hostIP: " + user.getHostIP() + "<br/> hostName: " + user.getName() + "<html/>";
+        String text = "<html> <p style=\"line-height:5; font-size:10px;\"> hostIP: " + user.getHostIP() + "<br/> hostName: " + user.getName() + "<html/>";
 
         //显示用户头像
-        ImageIcon icon;
+        user.setIconName(Optional.ofNullable(user.getIconName()).orElse(IconUtils.randomGenerateIcon()));
+        setIcon(IconUtils.getSizedIconByName(user.getIconName(), 40, 40));
 
-        try {
-            if (null == user.getIcon()) {
-                icon = new ImageIcon(new ImageIcon(ResourceUtils.getURL("classpath:icon/crown.png")).getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
-            } else {
-                icon = new ImageIcon(user.getIcon().getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
-            }
-            setIcon(icon);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        //设置头像与用户名的间隔.
+        //设置头像与用户名的间隔 25px
         setIconTextGap(25);
 
         setText(text);

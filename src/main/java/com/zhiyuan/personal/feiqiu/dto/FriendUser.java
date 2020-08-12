@@ -4,6 +4,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.swing.*;
+import java.util.Objects;
 
 /**
  * 〈一句话功能简述〉<br>
@@ -13,7 +14,6 @@ import javax.swing.*;
  * @create 2020/6/16 18:18
  * @since 1.0.0
  */
-@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -24,10 +24,17 @@ public class FriendUser extends ClientUser {
     //分组名
     private String groupName;
 
-//    @Builder(toBuilder = true)
-//    public FriendUser(String hostIP, String name, ImageIcon icon, String groupName) {
-//        super(hostIP, name, icon);
-//        this.groupName = groupName;
-//    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof FriendUser)) return false;
+        FriendUser that = (FriendUser) o;
+        //当用户的IP相同, 即任务该用户为同一用户
+        return Objects.equals(super.hostIP, that.hostIP);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), groupName);
+    }
 }

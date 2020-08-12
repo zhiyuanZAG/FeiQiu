@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import javax.swing.*;
+import java.util.Objects;
 
 /**
  * 〈一句话功能简述〉<br>
@@ -29,7 +30,18 @@ public class ClientUser {
     String name;
 
     //用户头像
-    ImageIcon icon;
+    String iconName;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ClientUser user = (ClientUser) o;
+        return Objects.equals(hostIP, user.hostIP);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(hostIP);
+    }
 }

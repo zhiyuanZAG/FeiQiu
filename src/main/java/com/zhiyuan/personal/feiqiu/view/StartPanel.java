@@ -10,7 +10,7 @@ import java.awt.*;
 
 /**
  * 〈一句话功能简述〉<br>
- * 〈应用打开后, 展示的好友列表页〉
+ * 〈开始面板实体类〉
  *
  * @author zhiyuanzhang9
  * @create 2020/6/16 16:13
@@ -31,9 +31,9 @@ public class StartPanel {
     //面板高度
     private static Integer HEIGHT = 760;
     //V方向组件间间隔(像素)
-    private static Integer VGAP = 2;
+    private static Integer V_GAP = 2;
     //H方向组件间间隔(像素)
-    private static Integer HGAP = 3;
+    private static Integer H_GAP = 3;
 
     //个人信息面板
     private JPanel namePanel;
@@ -50,21 +50,21 @@ public class StartPanel {
 
     /**
      * 功能描述: <br>
-     * 〈展示开始面板〉
+     * 〈展示当前面板〉
      *
      * @author zhiyuan.zhang01
      * @param: []
      * @return void
      * @created 2020/6/16 19:14
      */
-    public void showStartPanel(){
+    private void show(){
         if (isOpen) {
             System.out.println("限制只能打开一个主面板");
             return;
         }
         JFrame frame = new JFrame("feiQiu");
         frame.setBounds(POSITION_X, POSITION_Y, WIDTH, HEIGHT);
-        frame.setLayout(new BorderLayout(HGAP, VGAP));
+        frame.setLayout(new BorderLayout(H_GAP, V_GAP));
         frame.add(namePanel, BorderLayout.NORTH);
         frame.add(friendPanel, BorderLayout.CENTER);
         frame.add(toolPanel, BorderLayout.SOUTH);

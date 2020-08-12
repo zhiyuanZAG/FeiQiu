@@ -1,8 +1,11 @@
 package com.zhiyuan.personal.feiqiu.utils;
 
-import com.alibaba.fastjson.JSONObject;
+import com.zhiyuan.personal.feiqiu.constant.ToolIconEnum;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.util.ResourceUtils;
 
+import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,10 +24,16 @@ import java.util.stream.Collectors;
 @Slf4j
 public class IconUtils {
 
-//    @Value("iconPath")
-    private static String iconPath = "src/main/resources/icon";
+//    @Value("${iconPath}")
+    private static String iconPath = "src/main/resources/icon" ;
 
     private static final String DEFAULT_ICON_NAME = "crown";
+
+    //文件路径分隔符
+    private static final String SEPERATOR = "/";
+
+    //工具icon的path
+    private static final String TOOL_PATH = "tool";
 
 
     public static List<String> iconNameList;
@@ -41,7 +50,6 @@ public class IconUtils {
     static {
         try {
             File file = new File(iconPath);
-//            log.info("filePaht = {}, 是否是文件夹: {}", file.getAbsolutePath(), file.isDirectory());
             if (file.isDirectory()) {
                 File[] iconNames = file.listFiles();
                 iconNameList = Arrays.stream(iconNames).map(File::getName).collect(Collectors.toList());
@@ -79,6 +87,65 @@ public class IconUtils {
      */
     public static List<String> getSortedNameList() {
         return iconNameList.stream().sorted().collect(Collectors.toList());
+    }
+
+    /**
+     * 功能描述: <br>
+     * 〈根据iconName, 从系统资源中获取对应的Icon〉
+     *
+     * @author zhiyuan.zhang01
+     * @param: [iconName]
+     * @return javax.swing.Icon
+     * @created 2020/7/15 16:53
+    */
+    public static ImageIcon getIconByName(String iconName) {
+        ImageIcon icon = null;
+        try {
+            icon = new ImageIcon(ResourceUtils.getURL(iconPath + SEPERATOR + iconName));
+        }  catch (Exception e) {
+            log.error("当前用户获取随机icon失败, e->{}", e.getMessage());
+        }
+        return icon;
+    }
+
+    /**
+     * 功能描述: <br>
+     * 〈根据iconName, 从系统资源中获取指定大小的Icon〉
+     *
+     * @author zhiyuan.zhang01
+     * @param: [iconName, width, height]
+     * @return javax.swing.ImageIcon
+     * @created 2020/7/28 17:31
+    */
+    public static ImageIcon getSizedIconByName(String iconName, int width, int height) {
+        ImageIcon icon = null;
+        try {
+            ImageIcon temp = new ImageIcon(ResourceUtils.getURL(iconPath + SEPERATOR + iconName));
+            icon = new ImageIcon(temp.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
+        }  catch (Exception e) {
+            log.error("当前用户获取随机icon失败, e->{}", e.getMessage());
+        }
+        return icon;
+    }
+
+    /**
+     * 功能描述: <br>
+     * 〈根据iconName, 从系统资源中获取指定大小的Icon〉
+     *
+     * @author zhiyuan.zhang01
+     * @param: [iconName, width, height]
+     * @return javax.swing.ImageIcon
+     * @created 2020/8/6 18:24
+    */
+    public static ImageIcon getToolIconByName(ToolIconEnum iconName, int width, int height) {
+        ImageIcon icon = null;
+        try {
+            ImageIcon temp = new ImageIcon(ResourceUtils.getURL(iconPath + SEPERATOR + TOOL_PATH + SEPERATOR + iconName.name));
+            icon = new ImageIcon(temp.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
+        }  catch (Exception e) {
+            log.error("当前用户获取随机icon失败, e->{}", e.getMessage());
+        }
+        return icon;
     }
 
 

@@ -1,5 +1,6 @@
 package com.zhiyuan.personal.feiqiu.utils;
 
+import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 
 import java.net.*;
@@ -57,6 +58,7 @@ public class IpUtils {
         try {
             return InetAddress.getLocalHost().getHostAddress();
         } catch (UnknownHostException e) {
+//            System.out.println("获取当前IP失败异常:" + "\n" + e.getMessage());
             log.error("获取当前IP异常:{}", e.getMessage());
             return DEFAULT_IP;
         }
@@ -64,6 +66,7 @@ public class IpUtils {
 
     public static void main(String[] args) {
         System.out.println("当前IP为:"+ IpUtils.getLocalIP());
+        System.out.println("转化IP->" + JSONObject.toJSONString(IpUtils.getLocalIP().split("\\.")));
 
         System.out.println("通过网卡获取当前IP为:"+IpUtils.getLocalIpByNetcard());
     }
