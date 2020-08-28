@@ -32,7 +32,7 @@ public class StartPanelServiceImpl implements StartPanelService{
         //0. 初始化当前用户
         ClientUser local = createLocalUser();
         //1. 广播本机上线
-        udpService.sendMsg(UdpMsgTypeEnum.ONLINE, local, null);
+        udpService.sendMsg(UdpMsgTypeEnum.ON_LINE, local, null);
         //2. 展开启动页面
         StartPanelFactory.getStartPanelInstance().show();
         //3. 接收所有在线用户& 刷新好友列表

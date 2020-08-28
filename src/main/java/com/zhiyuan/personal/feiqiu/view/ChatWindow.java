@@ -1,5 +1,6 @@
 package com.zhiyuan.personal.feiqiu.view;
 
+import com.zhiyuan.personal.feiqiu.constant.FontTypeEnum;
 import com.zhiyuan.personal.feiqiu.constant.ToolIconEnum;
 import com.zhiyuan.personal.feiqiu.dto.ClientUser;
 import com.zhiyuan.personal.feiqiu.utils.DateUtils;
@@ -10,6 +11,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.time.LocalDateTime;
 
 /**
@@ -41,8 +44,13 @@ public class ChatWindow extends JFrame {
     private static final Integer TOOL_BAR_ICON_HEIGHT = 8;
 
     //字体
-    private static Font FONT = new Font("宋体", Font.BOLD, 12);
+    private static Font KAI = new Font(FontTypeEnum.KAI.code, Font.BOLD, 12);
 
+    //聊天输入框(文本域): 单行50字
+    private static final Integer textAreaColumn = 50;
+
+    //聊天输入框(文本域): 可视输入框15行
+    private static final Integer textAreaRow = 15;
 
     //当前聊天的对象
     private ClientUser user;
@@ -104,8 +112,8 @@ public class ChatWindow extends JFrame {
         toolBar.setSize(southFrameLeftPanel.getSize().width, TOOL_BAR_HEIGHT);  //设置工具栏大小
         southFrameLeftPanel.add(toolBar, BorderLayout.CENTER);
         //左半部分-下(输入框+发送按钮: 输入聊天内容)
-        // TODO: 2020/8/6 聊天窗口的文本输入框 && 接收到消息后, 需要进行窗口注册
         JTextArea inputArea = createInputArea();
+        // TODO: 2020/8/6 聊天窗口的文本输入框 && 接收到消息后, 需要进行窗口注册
         inputArea.setSize(southFrameLeftPanel.getSize().width, southFrameLeftPanel.getSize().height - TOOL_BAR_HEIGHT - jScrollPane.getSize().height);  //设置文本输入框的大小
         southFrameLeftPanel.add(inputArea, BorderLayout.SOUTH);
         southFramePanel.add(southFrameLeftPanel, BorderLayout.CENTER);
@@ -115,6 +123,8 @@ public class ChatWindow extends JFrame {
         //右半部分布局(上+下)
         southFrameRightPanel.setLayout(new BorderLayout(PANEL_GAP_H, PANEL_GAP_V));
         //右半部分-上(聊天对象的信息: ip+name+group)
+        JPanel southFrameRightUpPanel = new JPanel();
+
         //右半部分-下(当前自身的信息: ip+name)
         southFramePanel.add(southFrameRightPanel, BorderLayout.EAST);
 
@@ -132,10 +142,22 @@ public class ChatWindow extends JFrame {
      * @created 2020/8/6 18:56
     */
     private JTextArea createInputArea() {
-        JTextArea inputArea = new JTextArea();
-        // TODO: 2020/8/6 构建聊天窗口的输入框 + 挂载一个回车键的监听器(监听回车发送聊天内容)
-
-
+        //初始化指定行数/每行字数
+        JTextArea inputArea = new JTextArea(textAreaColumn, textAreaRow);
+        inputArea.setLineWrap(true);    //输入文本自动换行
+        inputArea.setForeground(Color.BLACK);   //设置组件的背景色
+        inputArea.setFont(new Font(FontTypeEnum.KAI.code, Font.BOLD, 10 )); //设置输入框的字体
+        //挂载一个按键的监听器(监听回车发送聊天内容)
+        inputArea.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                //添加回车键监听器
+                if ((char) e.getKeyChar() == KeyEvent.VK_ENTER) {
+                    // TODO: 2020/8/28  按下回车, 获取该输入框内的内容, 并调用UDP发送接口
+                    
+                }
+            }
+        });
         return inputArea;
     }
 

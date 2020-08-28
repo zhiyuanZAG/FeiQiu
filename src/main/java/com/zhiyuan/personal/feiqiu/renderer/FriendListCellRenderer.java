@@ -25,7 +25,7 @@ public class FriendListCellRenderer extends JLabel implements ListCellRenderer {
 
         //被选中后变色
         if (isSelected) {
-            setBackground(Color.PINK);
+            this.setBackground(Color.PINK);
         }
 
         /**

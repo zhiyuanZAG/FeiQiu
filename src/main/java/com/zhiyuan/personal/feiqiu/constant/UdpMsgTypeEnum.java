@@ -11,9 +11,10 @@ import java.util.Arrays;
  * @since 1.0
  */
 public enum UdpMsgTypeEnum {
-    ONLINE("online", "主动上线"),
+    ON_LINE("online", "主动上线"),
     STAYED("stayed", "保持在线"),
-    OFFLINE("offline", "主动下线"),
+    OFF_LINE("offline", "主动下线"),
+    SEND_MSG("sendMsg", "发送消息"),
     ;
 
     private String index;

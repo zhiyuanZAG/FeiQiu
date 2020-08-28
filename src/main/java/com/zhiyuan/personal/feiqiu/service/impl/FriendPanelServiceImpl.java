@@ -4,7 +4,6 @@ import com.zhiyuan.personal.feiqiu.constant.UdpMsgTypeEnum;
 import com.zhiyuan.personal.feiqiu.dto.ClientUser;
 import com.zhiyuan.personal.feiqiu.dto.factory.LocalClientUserFacotry;
 import com.zhiyuan.personal.feiqiu.service.FriendPanelService;
-import com.zhiyuan.personal.feiqiu.socket.LanSendService;
 import com.zhiyuan.personal.feiqiu.view.factory.FriendDefaultListModelFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,7 +57,7 @@ public class FriendPanelServiceImpl implements FriendPanelService {
         DefaultListModel model = FriendDefaultListModelFactory.getListModelInstance();
         boolean flag = model.contains(user);
         switch (typeEnum) {
-            case ONLINE:    //主动上线
+            case ON_LINE:    //主动上线
                 log.info("用户{}已上线", user.getHostIP());
                 if (flag) { //该用户已保存
                     return;
@@ -75,7 +74,7 @@ public class FriendPanelServiceImpl implements FriendPanelService {
                 }
                 model.add(0, user);
                 break;
-            case OFFLINE:   //主动下线
+            case OFF_LINE:   //主动下线
                 log.info("用户{}下线", user.getHostIP());
                 if (flag) {
                     model.removeElement(user);
