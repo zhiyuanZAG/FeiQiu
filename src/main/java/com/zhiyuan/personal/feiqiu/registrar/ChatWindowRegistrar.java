@@ -1,5 +1,6 @@
 package com.zhiyuan.personal.feiqiu.registrar;
 
+import com.zhiyuan.personal.feiqiu.constant.ChatRoleEnum;
 import com.zhiyuan.personal.feiqiu.dto.ClientUser;
 import com.zhiyuan.personal.feiqiu.view.ChatWindow;
 import org.springframework.stereotype.Service;
@@ -55,10 +56,10 @@ public class ChatWindowRegistrar {
      * @return void
      * @created 2020/8/5 17:17
     */
-    public void updateChatContent(ClientUser clientUser, String msg) {
+    public void updateChatContent(ClientUser clientUser, String msg, ChatRoleEnum roleEnum) {
         Optional<ChatWindow> optional = this.chatWindowList.stream().filter(o -> o.getUser().getHostIP().equals(clientUser.getHostIP())).findFirst();
         if (optional.isPresent()) {
-            optional.get().refreshContent(msg);
+            optional.get().refreshContent(msg, roleEnum);
         }
     }
 }

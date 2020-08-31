@@ -1,10 +1,15 @@
 package com.zhiyuan.personal.feiqiu.view;
 
+import com.zhiyuan.personal.feiqiu.constant.ChatRoleEnum;
 import com.zhiyuan.personal.feiqiu.constant.FontTypeEnum;
 import com.zhiyuan.personal.feiqiu.constant.ToolIconEnum;
+import com.zhiyuan.personal.feiqiu.constant.UdpMsgTypeEnum;
 import com.zhiyuan.personal.feiqiu.dto.ClientUser;
+import com.zhiyuan.personal.feiqiu.socket.LanSendService;
+import com.zhiyuan.personal.feiqiu.socket.impl.LanSendServiceImpl;
 import com.zhiyuan.personal.feiqiu.utils.DateUtils;
 import com.zhiyuan.personal.feiqiu.utils.IconUtils;
+import com.zhiyuan.personal.feiqiu.utils.UdpMsgStringUtils;
 import lombok.*;
 
 import javax.swing.*;
@@ -52,11 +57,27 @@ public class ChatWindow extends JFrame {
     //聊天输入框(文本域): 可视输入框15行
     private static final Integer textAreaRow = 15;
 
+    //聊天框内容居左对齐
+    private static final String ALIGN_LEFT = "left";
+    //聊天框内容居右对齐
+    private static final String ALIGN_RIGHT = "right";
+    //聊天框内容字体颜色:蓝
+    private static final String FONT_COLOR_BLUE = "blue";
+    //聊天框内容字体颜色:绿
+    private static final String FONT_COLOR_GREEN = "green";
+    //聊天框内容字体大小
+    private static final Integer CHAT_FONT_SIZE = 13;
+
+
+
     //当前聊天的对象
     private ClientUser user;
 
     //当前聊天的聊天内容框
     private JTextArea CHAT_AREA;
+
+    //发送udp消息的服务类
+    LanSendService lanSendService;
 
     /**
      * 功能描述: <br>
@@ -70,6 +91,7 @@ public class ChatWindow extends JFrame {
     public ChatWindow() throws HeadlessException {
         super();
         CHAT_AREA = modifyChatArea();
+        lanSendService = new LanSendServiceImpl();
     }
 
     /**
@@ -113,7 +135,7 @@ public class ChatWindow extends JFrame {
         southFrameLeftPanel.add(toolBar, BorderLayout.CENTER);
         //左半部分-下(输入框+发送按钮: 输入聊天内容)
         JTextArea inputArea = createInputArea();
-        // TODO: 2020/8/6 聊天窗口的文本输入框 && 接收到消息后, 需要进行窗口注册
+        //2020/8/6 聊天窗口的文本输入框 && 接收到消息后, 需要进行窗口注册
         inputArea.setSize(southFrameLeftPanel.getSize().width, southFrameLeftPanel.getSize().height - TOOL_BAR_HEIGHT - jScrollPane.getSize().height);  //设置文本输入框的大小
         southFrameLeftPanel.add(inputArea, BorderLayout.SOUTH);
         southFramePanel.add(southFrameLeftPanel, BorderLayout.CENTER);
@@ -147,14 +169,21 @@ public class ChatWindow extends JFrame {
         inputArea.setLineWrap(true);    //输入文本自动换行
         inputArea.setForeground(Color.BLACK);   //设置组件的背景色
         inputArea.setFont(new Font(FontTypeEnum.KAI.code, Font.BOLD, 10 )); //设置输入框的字体
-        //挂载一个按键的监听器(监听回车发送聊天内容)
+        //挂载按键的监听器(监听回车发送聊天内容)
         inputArea.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
-                //添加回车键监听器
+
+                //添加回车键监听器, 获取该输入框内的内容, 并调用UDP发送接口
                 if ((char) e.getKeyChar() == KeyEvent.VK_ENTER) {
-                    // TODO: 2020/8/28  按下回车, 获取该输入框内的内容, 并调用UDP发送接口
-                    
+                    String input = inputArea.getText();
+                    //1. 发送UDP信息
+                    String sendMsg = UdpMsgStringUtils.builderUdpMsg(UdpMsgTypeEnum.SEND_MSG, user, input);
+                    lanSendService.udpMsgSend(sendMsg);
+                    //2. 将信息展示在聊天面板内
+                    refreshContent(sendMsg, ChatRoleEnum.SELF);
+                    //3. 清除输入框内的内容
+                    inputArea.setText("");
                 }
             }
         });
@@ -229,10 +258,39 @@ public class ChatWindow extends JFrame {
      * @return void
      * @created 2020/8/5 17:18
     */
-    public void refreshContent(String msg) {
+    public void refreshContent(String msg, ChatRoleEnum roleEnum) {
         //当前时间
         String currentTime = DateUtils.localDateTimeFormatDT(LocalDateTime.now());
-        String appendStr = "<html><p style = \"line-height:10; font-size:13px; color:blue\"> " + currentTime + "<br/>" + msg + "</p></html>";
+        String textAlignSide = this.getAlignSideByRole(roleEnum);
+        String textColor = this.getColorByRole(roleEnum);
+        String appendStr = "<html><p style = \"line-height:10; font-size:" + CHAT_FONT_SIZE + "px; color:" + textColor + "text-align:" + textAlignSide + "\">" + currentTime + "<br/>" + msg + "</p></html>";
         this.CHAT_AREA.append(appendStr);
+    }
+
+    /**
+     * 功能描述: <br>
+     * 〈根据参与聊天的角色, 判断聊天内容展示的颜色: 本人绿色/ 其他人蓝色〉
+     *
+     * @author zhiyuan.zhang01
+     * @param: [roleEnum]
+     * @return java.lang.String
+     * @created 2020/8/31 15:31
+    */
+    private String getColorByRole(ChatRoleEnum roleEnum) {
+        return ChatRoleEnum.SELF.equals(roleEnum) ? FONT_COLOR_GREEN : FONT_COLOR_BLUE;
+    }
+
+
+    /**
+     * 功能描述: <br>
+     * 〈根据参与聊天的角色, 判断聊天内容的位置: 靠左对齐/靠右对齐〉
+     *
+     * @author zhiyuan.zhang01
+     * @param: [roleEnum]
+     * @return java.lang.String
+     * @created 2020/8/31 15:20
+     */
+    public String getAlignSideByRole(ChatRoleEnum roleEnum) {
+        return ChatRoleEnum.SELF.equals(roleEnum) ? ALIGN_RIGHT : ALIGN_LEFT;
     }
 }
