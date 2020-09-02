@@ -33,8 +33,8 @@ public class WinPostionUtils {
      * @return java.util.Map<java.lang.String,java.lang.String>
      * @created 2020/7/27 11:30
     */
-    public static Map<Integer, Integer> getPostionByIndex(Integer count) {
-        Map<Integer, Integer> result = new HashMap<>();
+    public static Map<String, Integer> getPostionByIndex(Integer count) {
+        Map<String, Integer> result = new HashMap<>();
         if (null == count) {
             return result;
         }
@@ -55,7 +55,8 @@ public class WinPostionUtils {
         //最终计算的窗口位置
         postionX = getPostionX((count - transition), postionX);
         postionY = getPostionY((count - transition), postionY);
-        result.put(postionX, postionY);
+        result.put("postionX", postionX);
+        result.put("postionY", postionY);
         return result;
     }
 

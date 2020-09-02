@@ -82,8 +82,8 @@ public class LanSendServiceImpl implements LanSendService {
             while (true) {
                 socket.receive(packet);
                 String msg = new String(packet.getData(), 0, packet.getLength());
-                //解析接收到的消息
                 log.info("接收到udp消息:{}", msg);
+                //解析接收到的消息
                 decodeUdpMsg(msg);
             }
         } catch (UnknownHostException e) {
@@ -129,7 +129,13 @@ public class LanSendServiceImpl implements LanSendService {
                     .name(hostName)
                     .iconName(hostIconName)
                     .build();
-            friendPanelService.maintainFriendList(typeEnum, user, hostMsg);
+            switch (typeEnum) {
+                case SEND_MSG:  //消息的类型为:"发型消息"
+                    break;
+                default:    //消息的类型为:主动上线/保持在线/主动下线
+                    friendPanelService.maintainFriendList(typeEnum, user, hostMsg);
+                    break;
+            }
         }
     }
 

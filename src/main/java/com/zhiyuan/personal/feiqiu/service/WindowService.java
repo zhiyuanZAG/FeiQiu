@@ -1,7 +1,9 @@
 package com.zhiyuan.personal.feiqiu.service;
 
 import com.zhiyuan.personal.feiqiu.dto.ClientUser;
+import com.zhiyuan.personal.feiqiu.dto.FriendUser;
 import com.zhiyuan.personal.feiqiu.utils.WinPostionUtils;
+import com.zhiyuan.personal.feiqiu.view.factory.ChatWindowFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -20,13 +22,9 @@ import java.util.Map;
 @Slf4j
 public class WindowService {
 
-    //当前已打开的聊天窗口的个数
-    private static Integer windowCount = 0;
-
-
     /**
      * 功能描述: <br>
-     * 〈异步:<br>启动一个聊天窗口〉
+     * 〈异步:<br> &nbsp;&nbsp;&nbsp;&nbsp;启动一个聊天窗口〉
      *
      * @author zhiyuan.zhang01
      * @param: [user]
@@ -34,12 +32,7 @@ public class WindowService {
      * @created 2020/7/27 11:21
     */
     @Async("cachedAsyncServiceExecutor")
-    public void createChatWindow(ClientUser user) {
-        windowCount++;
-        //新生成窗口的位置
-        Map<Integer, Integer> postionMap = WinPostionUtils.getPostionByIndex(windowCount);
-        int postionX = postionMap.keySet().stream().findFirst().get();
-        int postionY = postionMap.values().stream().findFirst().get();
-
+    public void createChatWindow(FriendUser user) {
+        ChatWindowFactory.createAndShowChatWindow(user);
     }
 }

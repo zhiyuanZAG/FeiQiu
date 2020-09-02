@@ -5,6 +5,9 @@ import com.zhiyuan.personal.feiqiu.constant.FontTypeEnum;
 import com.zhiyuan.personal.feiqiu.constant.ToolIconEnum;
 import com.zhiyuan.personal.feiqiu.constant.UdpMsgTypeEnum;
 import com.zhiyuan.personal.feiqiu.dto.ClientUser;
+import com.zhiyuan.personal.feiqiu.dto.FriendUser;
+import com.zhiyuan.personal.feiqiu.dto.LocalUser;
+import com.zhiyuan.personal.feiqiu.dto.factory.LocalClientUserFacotry;
 import com.zhiyuan.personal.feiqiu.socket.LanSendService;
 import com.zhiyuan.personal.feiqiu.socket.impl.LanSendServiceImpl;
 import com.zhiyuan.personal.feiqiu.utils.DateUtils;
@@ -71,7 +74,7 @@ public class ChatWindow extends JFrame {
 
 
     //当前聊天的对象
-    private ClientUser user;
+    private FriendUser user;
 
     //当前聊天的聊天内容框
     private JTextArea CHAT_AREA;
@@ -104,7 +107,7 @@ public class ChatWindow extends JFrame {
      * @return void
      * @created 2020/7/27 16:59
     */
-    private void showWindow(Integer postionX, Integer postionY) {
+    public void createWindow(Integer postionX, Integer postionY) {
         // TODO: 2020/7/27 构建聊天窗口
         //聊天窗口布局(上+下)
         this.setLayout(new BorderLayout(FRAME_GAP_H, FRAME_GAP_V));
@@ -144,14 +147,28 @@ public class ChatWindow extends JFrame {
         JPanel southFrameRightPanel = new JPanel();
         //右半部分布局(上+下)
         southFrameRightPanel.setLayout(new BorderLayout(PANEL_GAP_H, PANEL_GAP_V));
+        southFrameRightPanel.setBackground(Color.LIGHT_GRAY);
+
         //右半部分-上(聊天对象的信息: ip+name+group)
         JPanel southFrameRightUpPanel = new JPanel();
-
+        JLabel targetInfoLabel = new JLabel();
+        String targetStr = "<html><p style = \"line-height:15; font-size:20px; vertical-align: middle;\"> TargetIP: " + this.user.getHostIP() + "<br/> TargetName: " + user.getName() + "<br/> Group: " + user.getGroupName()  + "</p></html>";
+        targetInfoLabel.setText(targetStr);
+        southFrameRightUpPanel.add(targetInfoLabel);
+        southFrameRightPanel.add(southFrameRightUpPanel, BorderLayout.NORTH);
         //右半部分-下(当前自身的信息: ip+name)
+        ClientUser localUser = LocalClientUserFacotry.getLocalClientInstance();
+        JPanel southFrameRightDownPanel = new JPanel();
+        JLabel localInfoLabel = new JLabel();
+        String localStr = "<html><p style = \"line-height:15; font-size:20px; vertical-align: middle;\"> TargetIP: " + localUser.getHostIP() + "<br/> TargetName: " + localUser.getName() + "</p></html>";
+        localInfoLabel.setText(localStr);
+        southFrameRightDownPanel.add(localInfoLabel);
+        southFrameRightPanel.add(southFrameRightDownPanel, BorderLayout.SOUTH);
         southFramePanel.add(southFrameRightPanel, BorderLayout.EAST);
 
         this.add(southFramePanel, BorderLayout.SOUTH);  //窗口底部的内容面板
-        this.setVisible(true);
+        this.setLocation(postionX, postionY);   //自定义窗口位置
+//        this.setVisible(true);
     }
 
     /**
@@ -164,7 +181,7 @@ public class ChatWindow extends JFrame {
      * @created 2020/8/6 18:56
     */
     private JTextArea createInputArea() {
-        //初始化指定行数/每行字数
+        //初始化输入框: 指定行数/每行字数
         JTextArea inputArea = new JTextArea(textAreaColumn, textAreaRow);
         inputArea.setLineWrap(true);    //输入文本自动换行
         inputArea.setForeground(Color.BLACK);   //设置组件的背景色

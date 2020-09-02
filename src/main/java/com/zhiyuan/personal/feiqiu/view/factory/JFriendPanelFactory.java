@@ -3,9 +3,12 @@ package com.zhiyuan.personal.feiqiu.view.factory;
 import com.alibaba.fastjson.JSONObject;
 import com.zhiyuan.personal.feiqiu.dto.FriendUser;
 import com.zhiyuan.personal.feiqiu.renderer.FriendListCellRenderer;
+import com.zhiyuan.personal.feiqiu.service.WindowService;
+import com.zhiyuan.personal.feiqiu.utils.SpringContextUtil;
 import lombok.Builder;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import sun.rmi.runtime.Log;
 
 import javax.swing.*;
@@ -41,6 +44,12 @@ public class JFriendPanelFactory{
 
     //列表高度
     private static Integer LIST_HEIGHT = 640;
+
+    private static WindowService windowService;
+
+    static {
+        windowService = SpringContextUtil.getBean(WindowService.class);
+    }
 
 
     /**
@@ -83,6 +92,7 @@ public class JFriendPanelFactory{
                     FriendUser user = (FriendUser) friendList.getSelectedValue();
                     log.info("双击选择的好友项为: {}", JSONObject.toJSONString(user));
                     //提交线程池, 显示聊天窗口
+                    windowService.createChatWindow(user);
                 }
             }
 
