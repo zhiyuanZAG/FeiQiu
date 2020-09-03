@@ -23,10 +23,10 @@ import java.util.List;
 @Repository
 public class TrayPanel extends Frame {
 
-    //当前托盘面板展示的所有待点开的聊天对象集合
-    private List<ChatMsgDto> chatMsgDtoList;
+    //当前托盘面板展示的所有待点开的聊天对象集合(多线程修改)
+    private volatile List<ChatMsgDto> chatMsgDtoList;
 
-    //标定软件icon图标是否闪烁的标识符
+    //标定软件icon图标是否闪烁的标识符(多线程修改)
     private volatile boolean whetherFlash = false;
 
     /**
@@ -36,22 +36,33 @@ public class TrayPanel extends Frame {
      */
     private String iconName;
 
-    //无参构造器
+    //无参构造器初始化属性默认值
     public TrayPanel() throws HeadlessException {
         chatMsgDtoList = new LinkedList<>();
         iconName = "softIcon.png";  //当无未读消息时, 展示默认图标
     }
 
+    /**
+     * 功能描述: <br>
+     * 〈展示系统托盘〉
+     *
+     * @author zhiyuan.zhang01
+     * @param: []
+     * @return void
+     * @created 2020/9/3 14:49
+    */
     public void paintTrayPanel() {
 
         //获取当前的系统托盘
         SystemTray systemTray = SystemTray.getSystemTray();
         //自定义弹出菜单
         PopupMenu pm = new PopupMenu();
+        //为弹出菜单自定义UI
+//        pm.
         chatMsgDtoList.stream().forEach(dto->{
             //1. 创建一个弹出菜单项
-            //2. 添加该项到弹出菜单
-            //3. 弹出菜单
+            //2. 将该项添加到弹出菜单
+            //3. 给该项添加双击事件(双击后打开聊天窗口; 窗口打开后, 需要将该聊天从托盘面盘中删除)
         });
 
         //创建带有指定图像, 工具提示, 和弹出菜单的TrayIcon
