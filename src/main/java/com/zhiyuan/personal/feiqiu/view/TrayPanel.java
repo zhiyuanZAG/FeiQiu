@@ -1,10 +1,7 @@
 package com.zhiyuan.personal.feiqiu.view;
 
 import com.zhiyuan.personal.feiqiu.dto.ChatMsgDto;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.awt.*;
@@ -31,8 +28,8 @@ public class TrayPanel extends Frame {
 
     /**
      * 标定当前展示的icon的名字:
-     *  默认展示softIcon;
-     *  当有消息提示时, 展示最后一个消息发送者的头像icon
+     * 默认展示softIcon;
+     * 当有消息提示时, 展示最后一个消息发送者的头像icon
      */
     private String iconName;
 
@@ -46,11 +43,11 @@ public class TrayPanel extends Frame {
      * 功能描述: <br>
      * 〈展示系统托盘〉
      *
+     * @return void
      * @author zhiyuan.zhang01
      * @param: []
-     * @return void
      * @created 2020/9/3 14:49
-    */
+     */
     public void paintTrayPanel() {
 
         //获取当前的系统托盘
@@ -59,7 +56,7 @@ public class TrayPanel extends Frame {
         PopupMenu pm = new PopupMenu();
         //为弹出菜单自定义UI
 //        pm.
-        chatMsgDtoList.stream().forEach(dto->{
+        chatMsgDtoList.stream().forEach(dto -> {
             //1. 创建一个弹出菜单项
             //2. 将该项添加到弹出菜单
             //3. 给该项添加双击事件(双击后打开聊天窗口; 窗口打开后, 需要将该聊天从托盘面盘中删除)
