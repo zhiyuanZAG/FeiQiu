@@ -1,14 +1,10 @@
 package com.zhiyuan.personal.feiqiu.view.factory;
 
-import com.zhiyuan.personal.feiqiu.dto.ClientUser;
 import com.zhiyuan.personal.feiqiu.dto.FriendUser;
 import com.zhiyuan.personal.feiqiu.registrar.ChatWindowRegistrar;
 import com.zhiyuan.personal.feiqiu.utils.SpringContextUtil;
 import com.zhiyuan.personal.feiqiu.utils.WinPostionUtils;
 import com.zhiyuan.personal.feiqiu.view.ChatWindow;
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 
 import javax.swing.*;
 import java.awt.event.WindowAdapter;
