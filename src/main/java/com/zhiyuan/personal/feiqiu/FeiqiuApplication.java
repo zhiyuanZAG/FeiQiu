@@ -5,6 +5,7 @@ import com.zhiyuan.personal.feiqiu.service.StartPanelService;
 import com.zhiyuan.personal.feiqiu.service.impl.StartPanelServiceImpl;
 import com.zhiyuan.personal.feiqiu.view.factory.FriendDefaultListModelFactory;
 import com.zhiyuan.personal.feiqiu.view.factory.StartPanelFactory;
+import com.zhiyuan.personal.feiqiu.view.factory.TrayPanelFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -34,6 +35,8 @@ public class FeiqiuApplication {
 				//创建并显示GUI
 				StartPanelService startPanelService = context.getBean(StartPanelService.class);
 				startPanelService.createAndShowGUI();
+				//初始化系统托盘
+				TrayPanelFactory.initTrayPanel();
 				return null;
 			}
 		}.execute();

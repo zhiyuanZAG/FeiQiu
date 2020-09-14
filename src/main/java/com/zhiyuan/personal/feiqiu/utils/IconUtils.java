@@ -7,9 +7,8 @@ import org.springframework.util.ResourceUtils;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
+import java.io.FileNotFoundException;
+import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -100,10 +99,17 @@ public class IconUtils {
     */
     public static ImageIcon getIconByName(String iconName) {
         ImageIcon icon = null;
+        iconName = Optional.ofNullable(iconName).orElse("softIcon.png");
         try {
             icon = new ImageIcon(ResourceUtils.getURL(iconPath + SEPERATOR + iconName));
         }  catch (Exception e) {
             log.error("当前用户获取随机icon失败, e->{}", e.getMessage());
+            try {
+                //默认icon
+                icon = new ImageIcon(ResourceUtils.getURL(iconPath + SEPERATOR + "softIcon.png"));
+            } catch (FileNotFoundException ex) {
+
+            }
         }
         return icon;
     }
